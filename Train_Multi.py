@@ -179,11 +179,6 @@ def run_evaluate(files):
     # Print final results
     print(results_dict)
 
-    # Save the results to a JSON file
-    output_file_path = os.path.join("C:\\Users\\BSL\\Desktop", "results.txt")
-    with open(output_file_path, 'w') as outfile:
-        json.dump(results_dict, outfile)
-
     return results_dict
 
 
