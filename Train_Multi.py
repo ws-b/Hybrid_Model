@@ -6,8 +6,8 @@ from threading import Thread
 from Functions import compute_rmse
 from Train_XGboost import run_workflow as xgb_run_workflow
 from Train_Only_XGboost import run_workflow as only_run_workflow
-from Train_LinearR import cross_validate as lr_cross_validate
-from Train_Only_LR import cross_validate as only_lr_validate
+from Train_LinearR import train_validate_test as lr_train_validate_test
+from Train_Only_LR import train_validate_test as only_lr_train_validate_test
 import json
 
 # This code contains comments generated using ChatGPT.
@@ -154,9 +154,9 @@ def run_evaluate(files):
 
             # (d) Hybrid Model (Linear Regression)
             try:
-                hybrid_lr_results, _ = lr_cross_validate(sampled_files)
+                hybrid_lr_results, _ = lr_train_validate_test(sampled_files)
                 if hybrid_lr_results:
-                    hybrid_lr_rmse_values = [r['rmse'] for r in hybrid_lr_results]
+                    hybrid_lr_rmse_values = [r['test_rmse'] for r in hybrid_lr_results]
                     results_dict[size].append({
                         'model': 'Hybrid Model(Linear Regression)',
                         'rmse': hybrid_lr_rmse_values
@@ -166,9 +166,9 @@ def run_evaluate(files):
 
             # (e) Only LR
             try:
-                only_lr_results, _ = only_lr_validate(sampled_files)
+                only_lr_results, _ = only_lr_train_validate_test(sampled_files)
                 if only_lr_results:
-                    only_lr_rmse_values = [r['rmse'] for r in only_lr_results]
+                    only_lr_rmse_values = [r['test_rmse'] for r in only_lr_results]
                     results_dict[size].append({
                         'model': 'Only ML(LR)',
                         'rmse': only_lr_rmse_values
