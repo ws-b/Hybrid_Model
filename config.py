@@ -4,7 +4,7 @@
 DATA_PATH = "/home/ubuntu/SamsungSTF/Processed_Data/Trips"
 
 # Select the vehicle to be used in the experiment
-SELECTED_VEHICLE = "NiroEV"
+SELECTED_VEHICLE = "EV6"
 
 
 # 2. Sampling and Experiment Settings
