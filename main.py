@@ -15,8 +15,6 @@ from src.utils import compute_physics_rmse, scale_hyperparameters, compute_energ
 
 from src.models.xgboost_model import XGBoostModel
 from src.models.random_forest_model import RandomForestModel
-from src.models.mlp_model import MLPModel
-from src.models.transformer_model import TransformerModel
 from src.models.linear_regression_model import LinearRegressionModel
 
 def run_experiment():
@@ -54,8 +52,6 @@ def run_experiment():
     models = {
         "XGBoost": XGBoostModel(SELECTED_VEHICLE),
         "RandomForest": RandomForestModel(SELECTED_VEHICLE),
-        "MLP": MLPModel(SELECTED_VEHICLE),
-        "Transformer": TransformerModel(SELECTED_VEHICLE),
         "MLR": LinearRegressionModel(SELECTED_VEHICLE),
     }
 
@@ -107,7 +103,7 @@ def run_experiment():
                 best_params = experiment_manager.load_hyperparameters(model_name)
 
                 adjusted_params = best_params.copy()
-                if model_name in ["XGBoost", "MLP", "Transformer"]:
+                if model_name in ["XGBoost"]:
                     adjustment_factor = N_tuning_set / size
                     adjusted_params = scale_hyperparameters(best_params, adjustment_factor)
 
@@ -171,12 +167,8 @@ def run_experiment():
             trained_artifacts = model_instance.train(full_train_set, best_params, model_type='hybrid')
 
             artifacts_to_save = {}
-            if model_name in ['MLP', 'Transformer']:
-                model, scaler = trained_artifacts
-                artifacts_to_save = {'model': model, 'scaler': scaler}
-            else:
-                model = trained_artifacts
-                artifacts_to_save = {'model': model}
+            model = trained_artifacts
+            artifacts_to_save = {'model': model}
             experiment_manager.save_model_and_scaler(model_name, 'hybrid', artifacts_to_save)
 
             predictions = model_instance.predict(test_set, model_type='hybrid')
@@ -192,12 +184,8 @@ def run_experiment():
             trained_artifacts_ml = model_instance.train(full_train_set, best_params, model_type='ml_only')
 
             artifacts_to_save_ml = {}
-            if model_name in ['MLP', 'Transformer']:
-                model_ml, scaler_ml = trained_artifacts_ml
-                artifacts_to_save_ml = {'model': model_ml, 'scaler': scaler_ml}
-            else:
-                model_ml = trained_artifacts_ml
-                artifacts_to_save_ml = {'model': model_ml}
+            model_ml = trained_artifacts_ml
+            artifacts_to_save_ml = {'model': model_ml}
             experiment_manager.save_model_and_scaler(model_name, 'ml_only', artifacts_to_save_ml)
 
             predictions = model_instance.predict(test_set, model_type='ml_only')

@@ -1,169 +1,172 @@
-# Hybrid Machine Learning Model for Vehicle Energy Consumption Prediction
+# Predicting energy consumption in electric vehicles: Hybridization of data-driven and physics-based models
 
-## Description
+## 📌 Overview
 
-This project implements and evaluates a hybrid machine learning model for predicting vehicle energy consumption. The model combines a physics-based approach with machine learning to improve prediction accuracy. The project is designed to be a research tool for comparing the performance of different machine learning models and to study the effect of data size on model performance.
+This repository contains the source code for the research paper **"Predicting energy consumption in electric vehicles: Hybridization of data-driven and physics-based models"**. The project implements a **Hybrid Model** that combines a physics-based energy consumption model with data-driven machine learning algorithms (XGBoost, Random Forest, Linear Regression) to enhance prediction accuracy, especially in scenarios with limited training data.
 
-## Features
+The system evaluates model performance across varying dataset sizes and compares the **Hybrid approach** against **ML-only approaches**.
 
-- **Hybrid Modeling**: Combines a physics-based model with machine learning models (XGBoost, RandomForest, MLP, Transformer, LinearRegression) to predict vehicle energy consumption.
-- **Performance Evaluation**: Compares the performance of "Hybrid" models against "ML-only" models.
-- **Hyperparameter Tuning**: Uses Optuna for hyperparameter tuning of the machine learning models.
-- **Data Sampling**: a comprehensive analysis of the effect of data size on model performance.
+## 🚀 Features
 
-## Getting Started
+- **Hybrid Architecture**: Integrates physics-based residuals with ML predictions.
+- **Multi-Model Support**: Includes XGBoost, Random Forest, and Linear Regression (MLR).
+- **Automated Hyperparameter Tuning**: Utilizes **Optuna** for efficient optimization.
+- **Data Efficiency Analysis**: Systematically evaluates performance across different sample sizes (from 10 trips to full dataset).
+- **Reproducibility**: Includes configuration management and random seed control for consistent results.
+
+## 📂 Project Structure
+
+```bash
+Hybrid_Model/
+├── sample_trips/         # Anonymized sample trip data for demonstration
+│   └── EV6/              # Vehicle-specific data
+├── src/
+│   ├── models/           # Model implementations (XGBoost, RF, MLR)
+│   ├── data_loader.py    # Data loading and feature engineering
+│   ├── experiment_manager.py # Experiment logging and artifact management
+│   └── utils.py          # Utility functions (metrics, scaling)
+├── results/              # Directory for experiment outputs
+│   ├── optuna/           # Optuna study database
+│   ├── logs/             # Detailed experiment logs (JSON)
+│   ├── trained_models/   # Saved model artifacts (.joblib)
+│   └── hyperparameters/  # Best hyperparameters found
+├── config.py             # Global configuration file
+├── main.py               # Main execution script
+├── process_results.py    # Result aggregation and analysis script
+└── requirements.txt      # Python dependencies
+```
+
+## 🛠️ Getting Started
 
 ### Prerequisites
-
-- Python 3.8 or higher
-- The required Python packages are listed in the `requirements.txt` file.
+- Python 3.8+
+- Recommended: Virtual environment (venv or conda)
 
 ### Installation
 
-1. Clone the repository:
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/ws-b/Hybrid_Model.git
+   cd Hybrid_Model
    ```
-2. Install the required packages:
+
+2. **Install dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
 
-## Usage
+## ⚙️ Configuration (`config.py`)
 
-1. **Configure the experiment**:
-   - Open the `config.py` file to set the vehicle, models, and other parameters.
-2. **Run the experiment**:
-   - Run the `main.py` script to start the experiment.
-   ```bash
-   python main.py
-   ```
-3. **Process the results**:
-   - Run the `process_results.py` script to process the results.
-   ```bash
-   python process_results.py
-   ```
+You can control the experiment behavior by modifying `config.py`:
 
-## Project Structure
+- **`DATA_PATH`**: Path to the trip data (Default: `"sample_trips"`).
+- **`SELECTED_VEHICLE`**: Vehicle identifier (Default: `"EV6"`).
+- **`DEBUG_MODE`**:
+    - `True`: Runs a fast verification test (small subset, 1 iteration).
+    - `False`: Runs the full research experiment (comprehensive sampling, multiple iterations).
+- **`MODELS_TO_RUN`**: Select which models to train (e.g., `["XGBoost", "RandomForest", "MLR"]`).
 
+## 🏃 Usage
+
+### 1. Run the Experiment
+Execute the main script to start training and evaluation.
+```bash
+python main.py
 ```
-NEW_Hybrid_Model/
-├── src/
-│   ├── models/
-│   │   ├── base_model.py
-│   │   ├── linear_regression_model.py
-│   │   ├── mlp_model.py
-│   │   ├── random_forest_model.py
-│   │   ├── transformer_model.py
-│   │   └── xgboost_model.py
-│   ├── data_loader.py
-│   ├── experiment_manager.py
-│   └── utils.py
-├── results/
-│   ├── optuna/
-│   ├── logs/
-│   ├── trained_models/
-│   └── hyperparameters/
-├── requirements.txt
-├── config.py
-├── main.py
-└── process_results.py
+> **Note:** The script will automatically perform hyperparameter tuning (using Optuna), run cross-validation on sampled datasets, and finally evaluate on the test set.
+
+### 2. Analyze Results
+After the experiment completes, process the logs to generate summary reports.
+```bash
+python process_results.py
 ```
-
-## Models
-
-The project implements the following machine learning models:
-
-- **Linear Regression**: A simple linear regression model.
-- **MLP**: A multi-layer perceptron (neural network) model.
-- **Random Forest**: A random forest model.
-- **Transformer**: A transformer-based model.
-- **XGBoost**: An XGBoost model.
-
-All models are implemented in the `src/models` directory.
+Results will be saved in the `results/` directory.
 
 ---
 
-# 하이브리드 머신러닝 모델을 이용한 차량 에너지 소비 예측
+# 전기차 에너지 소비 예측: 데이터 기반 모델과 물리 기반 모델의 하이브리드화
 
-## 설명
+## 📌 개요
 
-이 프로젝트는 차량 에너지 소비 예측을 위한 하이브리드 머신러닝 모델을 구현하고 평가합니다. 이 모델은 물리 기반 접근 방식과 머신러닝을 결합하여 예측 정확도를 향상시킵니다. 이 프로젝트는 다양한 머신러닝 모델의 성능을 비교하고 데이터 크기가 모델 성능에 미치는 영향을 연구하기 위한 연구 도구로 설계되었습니다.
+본 저장소는 **"전기차 에너지 소비 예측: 데이터 기반 모델과 물리 기반 모델의 하이브리드화"** 연구 논문의 소스 코드입니다. 이 프로젝트는 물리 기반(Physics-based) 모델과 데이터 기반(Data-driven) 머신러닝 알고리즘(XGBoost, Random Forest, Linear Regression)을 결합하여, 특히 학습 데이터가 부족한 환경에서도 예측 정확도를 향상시키는 **하이브리드 모델**을 구현합니다.
 
-## 특징
+본 시스템은 다양한 데이터 크기에 따른 모델 성능을 체계적으로 평가하고, **하이브리드 접근 방식**과 **순수 ML 접근 방식**의 성능을 비교 분석합니다.
 
-- **하이브리드 모델링**: 물리 기반 모델과 머신러닝 모델(XGBoost, RandomForest, MLP, Transformer, LinearRegression)을 결합하여 차량 에너지 소비를 예측합니다.
-- **성능 평가**: "하이브리드" 모델과 "ML 전용" 모델의 성능을 비교합니다.
-- **하이퍼파라미터 튜닝**: Optuna를 사용하여 머신러닝 모델의 하이퍼파라미터를 튜닝합니다.
-- **데이터 샘플링**: 데이터 크기가 모델 성능에 미치는 영향에 대한 포괄적인 분석.
+## 🚀 주요 기능
 
-## 시작하기
+- **하이브리드 아키텍처**: 물리 모델의 잔차(Residual)를 ML 모델이 학습하여 보정하는 구조.
+- **다양한 모델 지원**: XGBoost, Random Forest, 다중 선형 회귀(MLR) 지원.
+- **자동 하이퍼파라미터 튜닝**: **Optuna**를 활용한 효율적인 파라미터 최적화.
+- **데이터 효율성 분석**: 샘플 크기(Sample Size) 변화에 따른 성능 변화를 실험적으로 검증.
+- **재현성(Reproducibility)**: 난수 시드(Seed) 고정 및 설정 관리를 통한 실험 결과의 일관성 보장.
 
-### 요구 사항
+## 📂 프로젝트 구조
 
-- Python 3.8 이상
-- `requirements.txt` 파일에 명시된 필수 Python 패키지.
-
-### 설치
-
-1.  저장소 복제:
-    ```bash
-    git clone https://github.com/ws-b/Hybrid_Model.git
-    ```
-2.  필수 패키지 설치:
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-## 사용법
-
-1.  **실험 구성**:
-    -   `config.py` 파일을 열어 차량, 모델 및 기타 매개변수를 설정합니다.
-2.  **실험 실행**:
-    -   `main.py` 스크립트를 실행하여 실험을 시작합니다.
-        ```bash
-        python main.py
-        ```
-3.  **결과 처리**:
-    -   `process_results.py` 스크립트를 실행하여 결과를 처리합니다.
-        ```bash
-        python process_results.py
-        ```
-
-## 프로젝트 구조
-
-```
-NEW_Hybrid_Model/
+```bash
+Hybrid_Model/
+├── sample_trips/         # 데모용 익명화된 주행 샘플 데이터
+│   └── EV6/              # 차량별 데이터 폴더
 ├── src/
-│   ├── models/
-│   │   ├── base_model.py
-│   │   ├── linear_regression_model.py
-│   │   ├── mlp_model.py
-│   │   ├── random_forest_model.py
-│   │   ├── transformer_model.py
-│   │   └── xgboost_model.py
-│   ├── data_loader.py
-│   ├── experiment_manager.py
-│   └── utils.py
-├── results/
-│   ├── optuna/
-│   ├── logs/
-│   ├── trained_models/
-│   └── hyperparameters/
-├── requirements.txt
-├── config.py
-├── main.py
-└── process_results.py
+│   ├── models/           # 모델 구현체 (XGBoost, RF, MLR)
+│   ├── data_loader.py    # 데이터 로드 및 피처 엔지니어링
+│   ├── experiment_manager.py # 실험 로그 및 결과 저장 관리
+│   └── utils.py          # 유틸리티 함수 (평가 지표, 스케일링 등)
+├── results/              # 실험 결과 저장 디렉토리
+│   ├── optuna/           # Optuna 튜닝 DB
+│   ├── logs/             # 상세 실험 로그 (JSON)
+│   ├── trained_models/   # 학습된 모델 아티팩트 (.joblib)
+│   └── hyperparameters/  # 최적화된 하이퍼파라미터
+├── config.py             # 전체 실험 설정 파일
+├── main.py               # 메인 실행 스크립트
+├── process_results.py    # 결과 집계 및 분석 스크립트
+└── requirements.txt      # 파이썬 의존성 패키지 목록
 ```
 
-## 모델
+## 🛠️ 시작하기
 
-이 프로젝트는 다음 머신러닝 모델을 구현합니다.
+### 필수 사항
+- Python 3.8 이상
+- 권장: 가상 환경 (venv 또는 conda) 사용
 
--   **선형 회귀**: 간단한 선형 회귀 모델.
--   **MLP**: 다층 퍼셉트론(신경망) 모델.
--   **랜덤 포레스트**: 랜덤 포레스트 모델.
--   **트랜스포머**: 트랜스포머 기반 모델.
--   **XGBoost**: XGBoost 모델.
+### 설치 방법
 
-모든 모델은 `src/models` 디렉토리에 구현되어 있습니다.
+1. **저장소 복제:**
+   ```bash
+   git clone https://github.com/ws-b/Hybrid_Model.git
+   cd Hybrid_Model
+   ```
+
+2. **패키지 설치:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+## ⚙️ 설정 (`config.py`)
+
+`config.py` 파일을 수정하여 실험 환경을 제어할 수 있습니다:
+
+- **`DATA_PATH`**: 데이터 파일 경로 (기본값: `"sample_trips"`).
+- **`SELECTED_VEHICLE`**: 대상 차량명 (기본값: `"EV6"`).
+- **`DEBUG_MODE`**:
+    - `True`: 빠른 검증 모드 (적은 데이터, 1회 반복).
+    - `False`: 전체 실험 모드 (논문용 전체 샘플링 및 반복 수행).
+- **`MODELS_TO_RUN`**: 실행할 모델 선택 (예: `["XGBoost", "RandomForest", "MLR"]`).
+
+## 🏃 사용 방법
+
+### 1. 실험 실행
+메인 스크립트를 실행하여 학습 및 평가를 시작합니다.
+```bash
+python main.py
+```
+> **참고:** 스크립트는 자동으로 하이퍼파라미터 튜닝(Optuna)을 수행하고, 다양한 샘플 크기에 대해 교차 검증을 진행한 뒤, 최종 테스트 셋에서 성능을 평가합니다.
+
+### 2. 결과 분석
+실험이 완료되면 결과 로그를 집계합니다.
+```bash
+python process_results.py
+```
+모든 결과물은 `results/` 디렉토리에 저장됩니다.
+
+---
+*This README was authored with the assistance of Gemini.*
