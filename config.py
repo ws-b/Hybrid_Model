@@ -1,13 +1,13 @@
 # 1. Data and Vehicle Settings
 # ----------------------------------
 # Path to the directory containing the dataset
-DATA_PATH = r"D:\SamsungSTF\Processed_Data\Trips"
+DATA_PATH = "sample_trips"
 
 # Select the vehicle to be used in the experiment
 SELECTED_VEHICLE = "EV6"
 
 # Path to save results
-RESULTS_DIR = r"C:\Users\WSONG\Documents\GitHub\Hybrid_Model\results"
+RESULTS_DIR = "results"
 
 
 # 2. Sampling and Experiment Settings
@@ -45,7 +45,7 @@ else:
 # 3. Model and Tuning Settings
 # ----------------------------------
 # List of models to be included in the experiment.
-# Available models: "XGBoost", "RandomForest", "MLP", "Transformer", "MLR"
+# Available models: "XGBoost", "RandomForest", "MLR"
 MODELS_TO_RUN = [
     "XGBoost", "RandomForest", "MLR"
     ]
@@ -58,11 +58,9 @@ MODELS_TO_TUNE = [
 
 # 4. Feature Settings
 # ----------------------------------
-# Features to be used for the Transformer model
-TRANSFORMER_FEATURES = ['speed', 'acceleration', 'ext_temp']
 
 # 5. 실험에서 제외할 모델 목록
 # ----------------------------------
 # 여기에 적힌 모델은 튜닝 및 평가 과정에서 건너뜁니다.
-# 예: ["RandomForest", "MLP"]
-MODELS_TO_SKIP = ['Transformer', 'MLP']
+# 예: ["RandomForest"]
+MODELS_TO_SKIP = []

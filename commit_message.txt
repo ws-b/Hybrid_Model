@@ -1,0 +1,8 @@
+refactor: cleanup models, update sample data, and refine documentation
+
+- Anonymized and filtered 30 sample trip files in `sample_trips/EV6`.
+- Removed MLP and Transformer model implementations and related configuration.
+- Simplified `main.py` by removing model-specific scaling and artifact saving logic.
+- Updated `config.py` to point to local sample data and disabled DEBUG_MODE.
+- Completely rewrote `README.md` (English/Korean) with detailed usage instructions and project structure.
+- Noted Gemini's assistance in README documentation.
